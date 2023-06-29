@@ -11,6 +11,22 @@ function TaskList() {
 
     const [selectedTaskId, setSelectedTaskId] = useState('');
 
+    useEffect(() => {
+        const userId = localStorage.getItem('userId'); 
+        const fetchTasks = async () => {
+          
+          try {
+              const response = await api.get(`/tasks/${userId}`);
+              setTasks(response.data);
+    
+          } catch (error) {
+            console.error('Error retrieving tasks:', error);
+          }
+        };
+      
+        fetchTasks();
+      }, []);
+
 
     const handleEditTask = (taskId) => {
         setSelectedTaskId(taskId);
