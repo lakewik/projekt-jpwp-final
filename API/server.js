@@ -112,4 +112,29 @@ app.post('/tasks', async (req, res) => {
   });
 
 
+  app.get('/tasks/:userId', async (req, res) => {
+    const userId = req.params.userId;
   
+    try {
+      const tasks = await Task.find({ userId });
+      res.status(200).json(tasks);
+    } catch (err) {
+      console.error('Error retrieving tasks:', err);
+      res.status(500).json({ message: 'Failed to retrieve tasks' });
+    }
+  });
+  
+
+  app.get('/task/:taskId', async (req, res) => {
+    const taskId = req.params.taskId;
+    
+    try {
+      const task = await Task.findById(taskId);
+      res.status(200).json(task);
+    } catch (err) {
+      console.error('Error retrieving tasks:', err);
+      res.status(500).json({ message: 'Failed to retrieve tasks' });
+    }
+    });
+
+    
