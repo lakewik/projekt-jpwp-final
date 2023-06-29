@@ -161,4 +161,20 @@ app.put('/tasks/:taskId', async (req, res) => {
     }
   });
 
+  app.delete('/tasks/:id', async (req, res) => {
+    const taskId = req.params.id;
+  
+    try {
+      await Task.findByIdAndDelete(taskId);
+      res.status(200).json({ message: 'Task deleted successfully' });
+    } catch (err) {
+      console.error('Error deleting task:', err);
+      res.status(500).json({ message: 'Failed to delete task' });
+    }
+  });
+  
+
+  app.listen(port, () => {
+    console.log(`Server running on http://localhost:${port}`);
+  });
   
