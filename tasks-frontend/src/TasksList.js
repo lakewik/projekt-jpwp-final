@@ -12,6 +12,30 @@ function TaskList() {
     const [selectedTaskId, setSelectedTaskId] = useState('');
 
 
+    const handleEditTask = (taskId) => {
+        setSelectedTaskId(taskId);
+      };
+    
+      const handleSaveTask = (updatedTask) => {
+        console.log(updatedTask);
+        // Update the task list with the updated task
+        const updatedTasks = tasks.map((task) => 
+          task._id === updatedTask.data._id ? updatedTask.data : task
+     );
+        setTasks(updatedTasks);
+        setSelectedTaskId('');
+      };
+
+    const handleDelete = async (taskId) => {
+        try {
+          await api.delete(`/tasks/${taskId}`);
+          setTasks(tasks.filter((task) => task._id !== taskId));
+          console.log('Task deleted successfully');
+        } catch (error) {
+          console.error('Error deleting task:', error);
+        }
+      };
+
     const handleAddTask = async () => {
         const userId = localStorage.getItem('userId');
         try {
