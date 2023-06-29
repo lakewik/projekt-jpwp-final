@@ -45,3 +45,5 @@ function RegisterForm() {
     </form>
   );
 }
+
+export default RegisterForm;
