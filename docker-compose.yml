@@ -1,0 +1,32 @@
+version: "3"
+services:
+  db:
+    image: mongo
+    command: --repair
+    ports:
+      - "27017:27017"
+    networks:
+      - network1
+
+  api:
+    build:
+      context: ./API
+      dockerfile: Dockerfile.api
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    networks:
+      - network1
+
+  frontend:
+    build:
+      context: ./tasks-frontend
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "80:80"
+    networks:
+      - network1
+
+networks:
+  network1:
