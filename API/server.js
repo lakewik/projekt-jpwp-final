@@ -98,5 +98,18 @@ app.post('/login', async (req, res) => {
 });
 
 
+app.post('/tasks', async (req, res) => {
+    const { description, userId } = req.body;
+  
+    try {
+      const task = new Task({ description, userId });
+      var taskadded = await task.save();
+      res.status(201).json({ message: 'Task created successfully', description:  description, userId:userId, _id: taskadded._id });
+    } catch (err) {
+      console.error('Error creating task:', err);
+      res.status(500).json({ message: 'Failed to create task' });
+    }
+  });
+
 
   
